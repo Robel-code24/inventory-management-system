@@ -1,8 +1,8 @@
 # Deployment Guide
 
 This guide will help you deploy the Inventory Management System with:
-- **Backend:** Hugging Face Spaces
-- **Frontend:** Vercel
+- **Backend:** Render.com (Free)
+- **Frontend:** Vercel (Free)
 
 ## Step 1: Push Code to GitHub
 
@@ -17,26 +17,24 @@ git branch -M main
 git push -u origin main
 ```
 
-## Step 2: Deploy Backend to Hugging Face
+## Step 2: Deploy Backend to Render.com
 
-1. Go to https://huggingface.co/spaces
-2. Click "Create new Space"
-3. Choose:
-   - **Space name:** `tmt-inventory-backend`
-   - **License:** MIT
-   - **SDK:** Docker
-   - **Hardware:** CPU Basic (free)
-4. Click "Create Space"
-5. In your Space, go to Settings → Repository
-6. Click "Connect to GitHub"
-7. Select your `inventory-management-system` repository
-8. Set the repository path to `backend/` (this is important!)
-9. Add these environment variables in Settings:
+1. Go to https://render.com
+2. Sign up/login with GitHub
+3. Click "New +" → "Web Service"
+4. Connect your GitHub repository `inventory-management-system`
+5. Configure:
+   - **Name:** `tmt-inventory-backend`
+   - **Root Directory:** `backend`
+   - **Runtime:** Python 3
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+6. Add environment variables:
    - `DATABASE_URL`: `sqlite:///./inventory.db`
-   - `JWT_SECRET`: Generate a secure random string (use: https://generate-random.org/api-key-generator)
-10. Click "Save" and the Space will automatically build and deploy
+   - `JWT_SECRET`: Generate a secure random string
+7. Click "Deploy Web Service"
 
-Once deployed, your backend URL will be: `https://huggingface.co/spaces/Robel-code24/tmt-inventory-backend`
+Once deployed, your backend URL will be: `https://tmt-inventory-backend.onrender.com`
 
 ## Step 3: Deploy Frontend to Vercel
 
