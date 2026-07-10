@@ -17,7 +17,7 @@ export default function Login() {
       <div className="hidden w-1/2 flex-col justify-center bg-navy px-8 py-12 text-white lg:flex lg:px-16">
         <div className="flex items-center gap-6 mb-8">
           <img
-            src="/profile.svg.jpg"
+            src="/profile.jpg"
             alt="Profile"
             className="h-24 w-24 rounded-full object-cover border-4 border-accent"
           />
