@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: "📊" },
@@ -15,6 +16,7 @@ const navItems = [
 export default function Layout() {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -23,7 +25,16 @@ export default function Layout() {
 
   return (
     <div className="flex min-h-screen">
-      <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-navy text-white">
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="fixed top-4 left-4 z-50 rounded-lg bg-navy p-2 text-white lg:hidden"
+      >
+        {sidebarOpen ? "✕" : "☰"}
+      </button>
+
+      {/* Sidebar */}
+      <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col bg-navy text-white transition-transform lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="border-b border-slate-700 px-6 py-5">
           <h1 className="text-lg font-bold tracking-tight">TMT InventoryPro</h1>
           <p className="mt-1 text-xs text-slate-400">Management System</p>
@@ -36,6 +47,7 @@ export default function Layout() {
               <NavLink
                 key={item.to}
                 to={item.to}
+                onClick={() => setSidebarOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                     isActive
@@ -67,13 +79,22 @@ export default function Layout() {
         </div>
       </aside>
 
-      <main className="ml-64 flex-1">
-        <div className="border-b bg-white px-8 py-4 shadow-sm">
-          <a href="https://linkedin.com/in/robi-hagos" target="_blank" rel="noopener noreferrer" className="text-sm text-slate-500 hover:text-accent">
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+        />
+      )}
+
+      {/* Main content */}
+      <main className="flex-1 lg:ml-64">
+        <div className="border-b bg-white px-4 py-4 shadow-sm lg:px-8">
+          <a href="https://github.com/Robel-code24" target="_blank" rel="noopener noreferrer" className="text-sm text-slate-500 hover:text-accent">
             Built by Robel Hagos Mahray →
           </a>
         </div>
-        <div className="p-8">
+        <div className="p-4 lg:p-8">
           <Outlet />
         </div>
       </main>

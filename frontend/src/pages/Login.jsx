@@ -13,8 +13,8 @@ export default function Login() {
   if (user) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="flex min-h-screen">
-      <div className="hidden w-1/2 flex-col justify-center bg-navy px-16 text-white lg:flex">
+    <div className="flex min-h-screen flex-col lg:flex-row">
+      <div className="hidden w-1/2 flex-col justify-center bg-navy px-8 py-12 text-white lg:flex lg:px-16">
         <div className="flex items-center gap-6 mb-8">
           <img
             src="/profile.svg.jpg"
@@ -43,8 +43,12 @@ export default function Login() {
         </a>
       </div>
 
-      <div className="flex flex-1 items-center justify-center px-6">
+      <div className="flex flex-1 items-center justify-center px-6 py-12 lg:px-0">
         <div className="w-full max-w-md">
+          <div className="lg:hidden mb-8 text-center">
+            <h1 className="text-3xl font-bold text-navy">TMT InventoryPro</h1>
+            <p className="mt-2 text-sm text-slate-500">Robel Hagos Mahray</p>
+          </div>
           <h2 className="text-2xl font-bold text-navy">Sign in</h2>
           <p className="mt-2 text-sm text-slate-500">Click the button below to access the system</p>
 
