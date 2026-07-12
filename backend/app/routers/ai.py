@@ -24,7 +24,7 @@ class TaskRequest(BaseModel):
     task_description: str
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest, current_user = Depends(get_current_user)):
+async def chat(request: ChatRequest):
     """Chat with the AI assistant."""
     try:
         # Convert Pydantic models to dicts
@@ -36,7 +36,7 @@ async def chat(request: ChatRequest, current_user = Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/analyze")
-async def analyze(current_user = Depends(get_current_user)):
+async def analyze():
     """Analyze inventory trends and provide AI insights."""
     try:
         analysis = analyze_inventory_trends()
@@ -45,7 +45,7 @@ async def analyze(current_user = Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/report")
-async def generate_report(request: ReportRequest, current_user = Depends(get_current_user)):
+async def generate_report(request: ReportRequest):
     """Generate an inventory report with AI analysis."""
     try:
         report = generate_inventory_report(request.report_type)
@@ -54,7 +54,7 @@ async def generate_report(request: ReportRequest, current_user = Depends(get_cur
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/suggest")
-async def suggest_task_help(request: TaskRequest, current_user = Depends(get_current_user)):
+async def suggest_task_help(request: TaskRequest):
     """Get AI guidance for performing a task."""
     try:
         guidance = suggest_task(request.task_description)

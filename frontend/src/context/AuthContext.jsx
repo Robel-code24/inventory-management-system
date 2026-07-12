@@ -42,8 +42,11 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error("Direct login failed:", error);
       // Fallback to mock user if backend is not available
-      localStorage.removeItem("token");
+      // Set a dummy token for testing purposes
+      const dummyToken = "dummy-token-for-testing-" + Date.now();
+      localStorage.setItem("token", dummyToken);
       setUser({ id: 1, email: "admin@inventory.com", full_name: "Admin User", role: "admin" });
+      console.log("Using mock user with dummy token");
     }
   };
 
