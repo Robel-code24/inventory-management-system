@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { api } from "../api/client";
 
 export default function AIAssistant({ isOpen, onClose }) {
   const [messages, setMessages] = useState([
@@ -25,26 +26,7 @@ export default function AIAssistant({ isOpen, onClose }) {
     setIsLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/api/ai/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          message: input,
-          conversation_history: messages.slice(-10),
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error("AI Error:", errorData);
-        throw new Error(errorData.detail || "Failed to get AI response");
-      }
-
-      const data = await response.json();
+      const data = await api.chat(input, messages.slice(-10));
       setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
     } catch (error) {
       console.error("Chat error:", error);

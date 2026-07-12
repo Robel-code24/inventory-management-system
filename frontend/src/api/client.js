@@ -214,6 +214,27 @@ export const api = {
     if (!token) return Promise.resolve(mockData.activity);
     return request("/api/activity/");
   },
+
+  // AI Assistant
+  chat: (message, conversationHistory = []) =>
+    request("/api/ai/chat", {
+      method: "POST",
+      body: JSON.stringify({
+        message,
+        conversation_history: conversationHistory,
+      }),
+    }),
+  analyze: () => request("/api/ai/analyze"),
+  generateReport: (reportType = "summary") =>
+    request("/api/ai/report", {
+      method: "POST",
+      body: JSON.stringify({ report_type: reportType }),
+    }),
+  suggestTask: (taskDescription) =>
+    request("/api/ai/suggest", {
+      method: "POST",
+      body: JSON.stringify({ task_description: taskDescription }),
+    }),
 };
 
 export { API_URL, ApiError };
